@@ -154,8 +154,9 @@ Each list item should be a regexp matching a single identifier."
 
 ;;;###autoload
 (defun cuda-mode ()
-  "Major mode for editing CUDA Cuda is a C like language extension
-for mixed native/GPU coding created by NVIDIA
+  "Major mode for editing CUDA.
+Cuda is a C like language extension for mixed native/GPU coding
+created by NVIDIA
  
 The hook `c-mode-common-hook' is run with no args at mode
 initialization, then `cuda-mode-hook'.
