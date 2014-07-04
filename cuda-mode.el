@@ -55,16 +55,10 @@ the appropriate place for that."
     (c-lang-const c-primitive-type-kwds)
     nil)))
 
-(c-lang-defconst c-type-modifier-keywds
-  "Type modifier keywords.  These can occur almost anywhere in types
-but they don't build a type of themselves.  Unlike the keywords on
-`c-primitive-type-kwds', they are fontified with the keyword face and
-not the type face."
-  cuda
-  (append 
-   '("__device__", "__global__", "__shared__", "__host__", "__constant__") 
-   (c-lang-const c-type-modifier-keywds) 
-   nil))
+(c-lang-defconst c-modifier-kwds
+  cuda (append 
+	(c-lang-const c-modifier-kwds)
+	'("__device__" "__global__" "__shared__" "__host__" "__constant__")))
 
 (c-lang-defconst c-other-op-syntax-tokens
   "List of the tokens made up of characters in the punctuation or
