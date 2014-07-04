@@ -1,9 +1,26 @@
-;;; package --- Summary
+;;; cuda-mode.el --- NVIDIA CUDA Major Mode
+
+;; Copyright (C) 2014  Jack Morrison
+
+;; Author: Jack Morrison <jackmorrison1@gmail.com>
+;; Keywords: c, languages
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
-;; Note: The interface used in this file requires CC Mode 5.30 or
-;; later.
+;; Originally created on EmacsWiki by user sergei.nosov @ http://www.emacswiki.org/emacs/CudaMode
 
 ;;; Code:
 
