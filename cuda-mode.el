@@ -149,7 +149,7 @@ Each list item should be a regexp matching a single identifier."
   ;; irrelevant menu alternatives.
   (cons "CUDA" (c-lang-const c-mode-menu cuda)))
 
-;;;###Autoload
+;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.cu\\'" . cuda-mode))
 (add-to-list 'auto-mode-alist '("\\.cuh\\'" . cuda-mode))
 
