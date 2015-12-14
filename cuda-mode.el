@@ -277,12 +277,11 @@ Each list item should be a regexp matching a single identifier."
   (c-lang-const c-matchers-3 cuda)
   "Accurate normal highlighting for CUDA mode.")
 
-(defvar cuda-font-lock-keywords
-  (append cuda-font-lock-keywords-3
-          (list
-           (list
-            (regexp-opt cuda-builtins 'symbols)
-            (0 'font-lock-builtin-face))))
+;;; Not used yet. Still figuring out cc-mode.
+(setq cuda-builtins-regexp (regexp-opt cuda-builtins 'symbols))
+(setq cuda-builtins-regexp nil)
+
+(defvar cuda-font-lock-keywords cuda-font-lock-keywords-3
   "Default expressions to highlight in CUDA mode.")
 
 (defvar cuda-mode-syntax-table nil
