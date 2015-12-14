@@ -58,14 +58,14 @@ will be handled.
 Do not try to modify this list for end user customizations; the
 `*-font-lock-extra-types' variable, where `*' is the mode prefix, is
 the appropriate place for that."
-  cuda 
-  (append 
-   '("dim3" 
+  cuda
+  (append
+   '("dim3"
      "char1" "uchar1" "char2" "uchar2" "char3" "uchar3" "char4" "uchar4"
      "short1" "ushort1" "short2" "ushort2" "short3" "ushort3" "short4" "ushort4"
      "int1" "uint1" "int2" "uint2" "int3" "uint3" "int4" "uint4"
      "long1" "ulong1" "long2" "ulong2" "long3" "ulong3" "long4" "ulong4"
-     "float1" "float2"  "float3" "float4" 
+     "float1" "float2"  "float3" "float4"
      "double1" "double2" )
    ;; Use append to not be destructive on the
    ;; return value below.
@@ -74,7 +74,7 @@ the appropriate place for that."
     nil)))
 
 (c-lang-defconst c-modifier-kwds
-  cuda (append 
+  cuda (append
 	(c-lang-const c-modifier-kwds)
 	'("__device__" "__global__" "__shared__" "__host__" "__constant__")))
 
@@ -265,15 +265,15 @@ contain type identifiers."
 Each list item should be a regexp matching a single identifier."
   :group 'cuda-mode)
 
-(defconst cuda-font-lock-keywords-1 
+(defconst cuda-font-lock-keywords-1
   (c-lang-const c-matchers-1 cuda)
   "Minimal highlighting for CUDA mode.")
 
-(defconst cuda-font-lock-keywords-2 
+(defconst cuda-font-lock-keywords-2
   (c-lang-const c-matchers-2 cuda)
   "Fast normal highlighting for CUDA mode.")
 
-(defconst cuda-font-lock-keywords-3 
+(defconst cuda-font-lock-keywords-3
   (c-lang-const c-matchers-3 cuda)
   "Accurate normal highlighting for CUDA mode.")
 
@@ -322,7 +322,7 @@ Each list item should be a regexp matching a single identifier."
   "Major mode for editing CUDA.
 Cuda is a C like language extension for mixed native/GPU coding
 created by NVIDIA
- 
+
 The hook `c-mode-common-hook' is run with no args at mode
 initialization, then `cuda-mode-hook'.
 
@@ -333,9 +333,9 @@ Key bindings:
   (c-initialize-cc-mode t)
   (set-syntax-table cuda-mode-syntax-table)
   (setq major-mode 'cuda-mode
-	mode-name "Cuda"
-	local-abbrev-table cuda-mode-abbrev-table
-	abbrev-mode t)
+        mode-name "Cuda"
+        local-abbrev-table cuda-mode-abbrev-table
+        abbrev-mode t)
   (use-local-map c-mode-map)
   ;; `c-init-language-vars' is a macro that is expanded at compile
   ;; time to a large `setq' with all the language variables and their
