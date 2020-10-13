@@ -315,6 +315,7 @@ Each list item should be a regexp matching a single identifier."
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.cu\\'" . cuda-mode))
+;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.cuh\\'" . cuda-mode))
 
 ;;;###autoload
