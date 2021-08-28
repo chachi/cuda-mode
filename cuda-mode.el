@@ -25,7 +25,7 @@
 ;;; Code:
 
 (require 'cc-mode)
-(require 'cl)
+(require 'cl-lib)
 
 ;; These are only required at compile time to get the sources for the
 ;; language constants.  (The cc-fonts require and the font-lock
