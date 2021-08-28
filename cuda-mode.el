@@ -25,7 +25,7 @@
 ;;; Code:
 
 (require 'cc-mode)
-(require 'cl)
+(require 'cl-lib)
 
 ;; These are only required at compile time to get the sources for the
 ;; language constants.  (The cc-fonts require and the font-lock
@@ -263,7 +263,8 @@ contain type identifiers."
 (defcustom cuda-font-lock-extra-types nil
   "*List of extra types to recognize in Cuda mode.
 Each list item should be a regexp matching a single identifier."
-  :group 'cuda-mode)
+  :group 'cuda-mode
+  :type '(repeat string))
 
 (defconst cuda-font-lock-keywords-1
   (c-lang-const c-matchers-1 cuda)
@@ -276,10 +277,6 @@ Each list item should be a regexp matching a single identifier."
 (defconst cuda-font-lock-keywords-3
   (c-lang-const c-matchers-3 cuda)
   "Accurate normal highlighting for CUDA mode.")
-
-;;; Not used yet. Still figuring out cc-mode.
-(setq cuda-builtins-regexp (regexp-opt cuda-builtins 'symbols))
-(setq cuda-builtins-regexp nil)
 
 (defvar cuda-font-lock-keywords cuda-font-lock-keywords-3
   "Default expressions to highlight in CUDA mode.")
