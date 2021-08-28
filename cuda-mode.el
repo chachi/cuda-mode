@@ -263,7 +263,8 @@ contain type identifiers."
 (defcustom cuda-font-lock-extra-types nil
   "*List of extra types to recognize in Cuda mode.
 Each list item should be a regexp matching a single identifier."
-  :group 'cuda-mode)
+  :group 'cuda-mode
+  :type '(repeat string))
 
 (defconst cuda-font-lock-keywords-1
   (c-lang-const c-matchers-1 cuda)
