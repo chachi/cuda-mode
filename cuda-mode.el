@@ -319,7 +319,7 @@ Each list item should be a regexp matching a single identifier."
 (add-to-list 'auto-mode-alist '("\\.cuh\\'" . cuda-mode))
 
 ;;;###autoload
-(defun cuda-mode ()
+(define-derived-mode cuda-mode prog-mode "cuda"
   "Major mode for editing CUDA.
 Cuda is a C like language extension for mixed native/GPU coding
 created by NVIDIA
@@ -329,7 +329,6 @@ initialization, then `cuda-mode-hook'.
 
 Key bindings:
 \\{cuda-mode-map}"
-  (interactive)
   (kill-all-local-variables)
   (c-initialize-cc-mode t)
   (set-syntax-table cuda-mode-syntax-table)
