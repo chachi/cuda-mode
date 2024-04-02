@@ -66,38 +66,30 @@ the appropriate place for that."
      "long1" "ulong1" "long2" "ulong2" "long3" "ulong3" "long4" "ulong4"
      "float1" "float2"  "float3" "float4"
      "double1" "double2" )
-   ;; Use append to not be destructive on the
-   ;; return value below.
-   (append
-    (c-lang-const c-primitive-type-kwds)
-    nil)))
+   (c-lang-const c-primitive-type-kwds c++)))
 
 (c-lang-defconst c-modifier-kwds
   cuda (append
-	(c-lang-const c-modifier-kwds)
-	'("__device__" "__global__" "__shared__" "__host__" "__constant__")))
+	'("__host__" "__device__" "__global__")
+	(c-lang-const c-modifier-kwds c++)))
+
+(c-lang-defconst c-type-modifier-prefix-kwds
+  cuda (append
+	'("__device__" "__constant__" "__shared__" "__grid_constant__" "__managed__" "__restrict__")
+	(c-lang-const c-type-modifier-prefix-kwds c++)))
 
 (c-lang-defconst c-other-op-syntax-tokens
   "List of the tokens made up of characters in the punctuation or
 parenthesis syntax classes that have uses other than as expression
 operators."
-  cuda
-  (append '("#" "##"	; Used by cpp.
-	    "::" "..." "<<<" ">>>")
-	  (c-lang-const c-other-op-syntax-tokens)))
+  cuda (append
+	'("<<<" ">>>")
+	(c-lang-const c-other-op-syntax-tokens c++)))
 
 (c-lang-defconst c-primary-expr-kwds
   "Keywords besides constants and operators that start primary expressions."
   cuda  '("gridDim" "blockIdx" "blockDim" "threadIdx" "warpSize"))
 
-(c-lang-defconst c-paren-nontype-kwds
-  "Keywords that may be followed by a parenthesis expression that doesn't
-contain type identifiers."
-  cuda       nil
-  (c c++) '(;; GCC extension.
-	    "__attribute__"
-	    ;; MSVC extension.
-	    "__declspec"))
 (eval-and-compile ;; required by cc-mode
   (defvar cuda-builtins
     '(;; atom
@@ -305,59 +297,40 @@ contain type identifiers."
   '(("else" "else" c-electric-continued-statement 0)
     ("while" "while" c-electric-continued-statement 0)))
 
-(defvar cuda-mode-map (let ((map (c-make-inherited-keymap)))
-			;; Add bindings which are only useful for CUDA
-			map)
-  "Keymap used in cuda-mode buffers.")
-
-(easy-menu-define cuda-menu cuda-mode-map "CUDA Mode Commands"
-  ;; Can use `cuda' as the language for `c-mode-menu'
-  ;; since its definition covers any language.  In
-  ;; this case the language is used to adapt to the
-  ;; nonexistence of a cpp pass and thus removing some
-  ;; irrelevant menu alternatives.
-  (cons "CUDA" (c-lang-const c-mode-menu cuda)))
+(defvar-keymap cuda-mode-map
+  :parent c++-mode-map
+  :doc "Cuda keymap inherited from C++")
 
 ;;;###autoload
-(add-to-list 'auto-mode-alist '("\\.cu\\'" . cuda-mode))
-;;;###autoload
-(add-to-list 'auto-mode-alist '("\\.cuh\\'" . cuda-mode))
+(add-to-list 'auto-mode-alist '("\\.cu[h]?\\'" . cuda-mode))
+
+(defun cuda-completion-function ()
+  "Generate completion list for primitive capf support."
+  (when-let ((is-cuda (eq major-mode 'cuda-mode)) ;; only work in cuda-mode
+	     (bounds (bounds-of-thing-at-point 'symbol)))
+    (list (car bounds)
+          (cdr bounds)
+          cuda-builtins
+          :exclusive 'no)))
 
 ;;;###autoload
-(defun cuda-mode ()
-  "Major mode for editing CUDA.
-Cuda is a C like language extension for mixed native/GPU coding
-created by NVIDIA
-
-The hook `c-mode-common-hook' is run with no args at mode
-initialization, then `cuda-mode-hook'.
-
+(define-derived-mode cuda-mode c++-mode "Cuda"
+  "Major mode for editing Cuda code.
+This mode derives from C++ mode.
 Key bindings:
-\\{cuda-mode-map}"
-  (interactive)
-  (kill-all-local-variables)
+\\{ccuda-mode-map}"
+  :after-hook (progn (c-make-noise-macro-regexps)
+		     (c-make-macro-with-semi-re)
+		     (c-update-modeline))
   (c-initialize-cc-mode t)
-  (set-syntax-table cuda-mode-syntax-table)
-  (setq major-mode 'cuda-mode
-        mode-name "Cuda"
-        local-abbrev-table cuda-mode-abbrev-table
-        abbrev-mode t)
-  (use-local-map c-mode-map)
-  ;; `c-init-language-vars' is a macro that is expanded at compile
-  ;; time to a large `setq' with all the language variables and their
-  ;; customized values for our language.
+  (setq abbrev-mode t)
   (c-init-language-vars cuda-mode)
-  ;; `c-common-init' initializes most of the components of a CC Mode
-  ;; buffer, including setup of the mode menu, font-lock, etc.
-  ;; There's also a lower level routine `c-basic-common-init' that
-  ;; only makes the necessary initialization to get the syntactic
-  ;; analysis and similar things working.
   (c-common-init 'cuda-mode)
-  (easy-menu-add cuda-menu)
-  (run-hooks 'c-mode-common-hook)
-  (run-hooks 'cuda-mode-hook)
-  (setq font-lock-keywords-case-fold-search t)
-  (c-update-modeline))
+  (cc-imenu-init cc-imenu-c++-generic-expression)
+  (add-hook 'flymake-diagnostic-functions 'flymake-cc nil t)
+  (add-hook 'completion-at-point-functions #'cuda-completion-function)
+  (c-run-mode-hooks 'c-mode-common-hook))
+
 
 (provide 'cuda-mode)
 ;;; cuda-mode.el ends here
