@@ -1,9 +1,11 @@
-;;; cuda-mode.el --- NVIDIA CUDA Major Mode
+;;; cuda-mode.el --- NVIDIA CUDA Major Mode derived from C++-mode. -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2014  Jack Morrison
 
 ;; Author: Jack Morrison <jackmorrison1@gmail.com>
-;; Keywords: c, languages
+;; URL: https://github.com/chachi/cuda-mode
+;; Keywords: c, languages, cuda
+;; Version: 0.1
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
